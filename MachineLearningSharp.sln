@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TensorFlowAsAService", "Ten
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesseractSharp", "TesseractSharp\TesseractSharp.csproj", "{9580F91E-3BDB-4F13-A782-03930C47BA77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvShark", "OpenCvShark\OpenCvShark.csproj", "{27E75594-889A-4386-96AB-84B403B283F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9580F91E-3BDB-4F13-A782-03930C47BA77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9580F91E-3BDB-4F13-A782-03930C47BA77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9580F91E-3BDB-4F13-A782-03930C47BA77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27E75594-889A-4386-96AB-84B403B283F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27E75594-889A-4386-96AB-84B403B283F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27E75594-889A-4386-96AB-84B403B283F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27E75594-889A-4386-96AB-84B403B283F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
