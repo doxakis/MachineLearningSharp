@@ -11,15 +11,20 @@ namespace TensorFlowAsAService
     public class FileClassificationResult
     {
         public string File { get; internal set; }
-        public string Label { get; internal set; }
-        public float Percent { get; internal set; }
         public float[] Bottleneck { get; internal set; }
+        public IEnumerable<Prediction> Predictions { get; internal set; }
+    }
+
+    public class Prediction
+    {
+        public string Label { get; internal set; }
         public int ClassificationId { get; internal set; }
+        public float Percent { get; internal set; }
     }
 
     public class TensorFlowClassificationWrapper
     {
-        public static List<FileClassificationResult> FindLabel(byte[] model, string[] labels, IEnumerable<byte[]> files)
+        public static List<FileClassificationResult> FindLabel(byte[] model, string[] labels, IEnumerable<string> files)
         {
             List<FileClassificationResult> listOfFileClassificationResult = new List<FileClassificationResult>();
 
@@ -32,42 +37,49 @@ namespace TensorFlowAsAService
             {
                 foreach (var file in files)
                 {
-                    FileClassificationResult fileResult = new FileClassificationResult();
-
-                    var tensor = CreateTensorFromImageFile(file);
-                    var runner = session.GetRunner();
-
-                    TFOutput classificationLayer = graph["softmax"][0];
-                    TFOutput bottleneckLayer = graph["pool_3"][0];
-
-                    TFOutput tIn = graph["DecodeJpeg"][0];
-                    runner.AddInput(tIn, tensor).Fetch(classificationLayer, bottleneckLayer);
-                    var output = runner.Run();
-
-                    // Bottleneck result.
-                    var result = output[1];
-                    var values = ((Single[][][][])result.GetValue(jagged: true))[0][0][0];
-                    fileResult.Bottleneck = values;
-
-                    // Classification result.
-                    result = output[0];
-
-                    var bestIdx = 0;
-                    float p = 0, best = 0;
-                    var probabilities = ((float[][])result.GetValue(jagged: true))[0];
-                    for (int i = 0; i < probabilities.Length; i++)
+                    try
                     {
-                        if (probabilities[i] > best)
-                        {
-                            bestIdx = i;
-                            best = probabilities[i];
-                        }
-                    }
-                    fileResult.Label = labels[bestIdx];
-                    fileResult.ClassificationId = bestIdx;
-                    fileResult.Percent = best * 100.0f;
+                        FileClassificationResult fileResult = new FileClassificationResult();
 
-                    listOfFileClassificationResult.Add(fileResult);
+                        var tensor = CreateTensorFromImageFile(File.ReadAllBytes(file));
+                        var runner = session.GetRunner();
+
+                        TFOutput classificationLayer = graph["softmax"][0];
+                        TFOutput bottleneckLayer = graph["pool_3"][0];
+
+                        TFOutput tIn = graph["DecodeJpeg"][0];
+                        runner.AddInput(tIn, tensor).Fetch(classificationLayer, bottleneckLayer);
+                        var output = runner.Run();
+
+                        // Bottleneck result.
+                        var result = output[1];
+                        var values = ((Single[][][][])result.GetValue(jagged: true))[0][0][0];
+                        fileResult.Bottleneck = values;
+
+                        // Classification result.
+                        result = output[0];
+
+                        var probabilities = ((float[][])result.GetValue(jagged: true))[0];
+
+                        var predictions = new List<Prediction>();
+                        for (int i = 0; i < probabilities.Length; i++)
+                        {
+                            predictions.Add(new Prediction
+                            {
+                                ClassificationId = i,
+                                Label = (i >= labels.Length) ? "Unknown" : labels[i],
+                                Percent = probabilities[i]
+                            });
+                        }
+                        fileResult.Predictions = predictions;
+                        fileResult.File = file;
+
+                        listOfFileClassificationResult.Add(fileResult);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
             }
             return listOfFileClassificationResult;
