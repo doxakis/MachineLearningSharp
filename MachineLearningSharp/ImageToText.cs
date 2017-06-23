@@ -13,18 +13,18 @@ namespace MachineLearningSharp
     {
         public static string GetTextFromPage(string filePath)
         {
-            var text = "";
+            var text = new StringBuilder();
             var subImgs = GetTextAreas(filePath);
             foreach (var im in subImgs)
             {
                 using (var engine = new TesseractEngine(@"./tessdata", "eng"))
                 {
                     engine.DefaultPageSegMode = PageSegMode.SingleLine;
-                    text += engine.Process(im).GetText();
+                    text.Append(engine.Process(im).GetText());
                 }
             }
 
-            return text;
+            return text.ToString();
         }
 
         public static List<Pix> GetTextAreas(string filePath)
