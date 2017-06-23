@@ -75,6 +75,7 @@
     <Content Include="samples\sample1.tif" />
     <Content Include="samples\sample2.png" />
     <Content Include="samples\sample3.png" />
+    <Content Include="samples\sample4.png" />
     <Content Include="x64\liblept172.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

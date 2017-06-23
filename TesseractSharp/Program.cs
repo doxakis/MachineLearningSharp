@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,30 @@ namespace TesseractSharp
         {
             // Ensure you have Visual Studio 2015 x86 & x64 runtimes installed :
             // https://www.microsoft.com/en-us/download/details.aspx?id=48145
-            
+
             var projectDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             var testImagePath = projectDir + @"\samples\sample3.png";
-            
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            int count = 10;
+            Parallel.For(0, count, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, (index) =>
+            {
+                RunTesseract(projectDir, testImagePath);
+            });
+
+            stopwatch.Stop();
+
+            Console.WriteLine("Duration: " + stopwatch.Elapsed.ToString());
+            Console.WriteLine("Average speed (ms/page): " + (stopwatch.ElapsedMilliseconds / count));
+
+            Console.Write("Press any key to continue . . . ");
+            Console.ReadKey();
+        }
+
+        private static void RunTesseract(string projectDir, string testImagePath)
+        {
             try
             {
                 using (var engine = new TesseractEngine(projectDir + @"\tessdata", "eng", EngineMode.Default))
@@ -75,8 +96,6 @@ namespace TesseractSharp
                 Console.WriteLine("Details: ");
                 Console.WriteLine(e.ToString());
             }
-            Console.Write("Press any key to continue . . . ");
-            Console.ReadKey();
         }
     }
 }
