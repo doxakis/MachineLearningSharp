@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineLearningSharp", "MachineLearningSharp\MachineLearningSharp.csproj", "{F5285BD9-8086-404C-B7FE-E9C4240341D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TensorFlowAsAService", "TensorFlowAsAService\TensorFlowAsAService.csproj", "{DBDC7F22-8BE7-40D6-BA10-646F0833D198}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F5285BD9-8086-404C-B7FE-E9C4240341D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5285BD9-8086-404C-B7FE-E9C4240341D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5285BD9-8086-404C-B7FE-E9C4240341D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBDC7F22-8BE7-40D6-BA10-646F0833D198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBDC7F22-8BE7-40D6-BA10-646F0833D198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBDC7F22-8BE7-40D6-BA10-646F0833D198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBDC7F22-8BE7-40D6-BA10-646F0833D198}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
