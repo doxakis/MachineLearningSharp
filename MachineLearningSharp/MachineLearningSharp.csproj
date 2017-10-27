@@ -135,10 +135,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="csel.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="imagenet_comp_graph_label_strings.txt" />
+    <Content Include="samples\letter.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="samples\cat\cat1.jpg" />
     <Content Include="samples\cat\cat2.jpg" />
     <Content Include="samples\cat\cat3.jpg" />

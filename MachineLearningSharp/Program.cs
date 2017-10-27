@@ -18,7 +18,7 @@ namespace MachineLearningSharp
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            Console.WriteLine(ImageToText.GetTextFromPage("./csel.jpg"));
+            Console.WriteLine(ImageToText.GetTextFromPage("./samples/letter.png"));
             Console.ReadKey();
 
             var projectDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
